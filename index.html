@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,13 +16,13 @@
             margin: 0;
             font-family: Arial, Helvetica, sans-serif;
             background: #f4f6f8;
-            color: #222;
+            color: #263238;
         }
 
         header {
             background: #1f4e79;
             color: white;
-            padding: 24px;
+            padding: 25px;
             text-align: center;
         }
 
@@ -36,10 +37,65 @@
         }
 
         .container {
-            max-width: 1400px;
-            margin: 30px auto;
-            padding: 0 20px 40px;
+            max-width: 1450px;
+            margin: 28px auto;
+            padding: 0 20px 50px;
         }
+
+        /* LEGENDA */
+
+        .legenda {
+            background: white;
+            border-radius: 12px;
+            padding: 15px 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px;
+            align-items: center;
+        }
+
+        .legenda-item {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 13px;
+        }
+
+        .cor {
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+        }
+
+        .cor-evento {
+            background: #86c5da;
+        }
+
+        .cor-academico {
+            background: #a9c99a;
+        }
+
+        .cor-avaliacao {
+            background: #80b98c;
+        }
+
+        .cor-atencao {
+            background: #f4df72;
+        }
+
+        .cor-nao-letivo {
+            background: #ef8585;
+        }
+
+        .cor-especial {
+            background: #e8a7d3;
+        }
+
+
+        /* CALENDÁRIOS */
 
         .calendarios {
             display: grid;
@@ -72,16 +128,18 @@
         .semana div {
             text-align: center;
             font-weight: bold;
-            padding: 10px 4px;
+            font-size: 12px;
+            padding: 10px 3px;
             background: #eef2f5;
             border-bottom: 1px solid #ddd;
         }
 
         .dia {
-            min-height: 85px;
-            padding: 8px;
-            border-right: 1px solid #e5e5e5;
-            border-bottom: 1px solid #e5e5e5;
+            position: relative;
+            min-height: 105px;
+            padding: 7px;
+            border-right: 1px solid #e3e6e8;
+            border-bottom: 1px solid #e3e6e8;
             background: white;
         }
 
@@ -90,17 +148,79 @@
         }
 
         .numero {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            width: 25px;
+            height: 25px;
+
             font-weight: bold;
-            font-size: 15px;
+            font-size: 14px;
+            border-radius: 50%;
         }
 
         .vazio {
-            background: #f8f8f8;
+            background: #f7f8f9;
         }
 
-        .fim-semana {
-            background: #fafafa;
+        .domingo {
+            background: #fff5f5;
         }
+
+        .domingo .numero {
+            color: #b62323;
+        }
+
+
+        /* EVENTOS */
+
+        .evento {
+            margin-top: 5px;
+            padding: 4px 5px;
+            border-radius: 5px;
+
+            font-size: 10px;
+            line-height: 1.25;
+            font-weight: 600;
+        }
+
+        .evento-institucional {
+            background: #86c5da;
+        }
+
+        .evento-academico {
+            background: #a9c99a;
+        }
+
+        .evento-avaliacao {
+            background: #80b98c;
+        }
+
+        .evento-atencao {
+            background: #f4df72;
+        }
+
+        .evento-nao-letivo {
+            background: #ef8585;
+        }
+
+        .evento-especial {
+            background: #e8a7d3;
+        }
+
+
+        /* QUANDO O DIA INTEIRO NÃO É LETIVO */
+
+        .dia.nao-letivo {
+            background: #f8c6c6;
+        }
+
+        .dia.nao-letivo .numero {
+            background: #d94d4d;
+            color: white;
+        }
+
 
         footer {
             text-align: center;
@@ -109,324 +229,546 @@
             font-size: 13px;
         }
 
-        @media (max-width: 900px) {
+
+        @media (max-width: 950px) {
+
             .calendarios {
                 grid-template-columns: 1fr;
             }
+
         }
+
     </style>
 </head>
+
 
 <body>
 
 <header>
+
     <h1>MEE120 - Diurno</h1>
-    <p>Cronograma da Disciplina — 2º Semestre de 2026</p>
+
+    <p>
+        Cronograma da Disciplina —
+        2º Semestre de 2026
+    </p>
+
 </header>
+
 
 <div class="container">
 
-    <div class="calendarios">
+    <div class="legenda">
 
-        <!-- AGOSTO -->
-        <div class="mes">
-            <h2>Agosto 2026</h2>
-
-            <div class="semana">
-                <div>DOM</div>
-                <div>SEG</div>
-                <div>TER</div>
-                <div>QUA</div>
-                <div>QUI</div>
-                <div>SEX</div>
-                <div>SÁB</div>
-            </div>
-
-            <div class="dias">
-                <div class="dia vazio"></div>
-                <div class="dia vazio"></div>
-                <div class="dia vazio"></div>
-                <div class="dia vazio"></div>
-                <div class="dia vazio"></div>
-                <div class="dia vazio"></div>
-
-                <div class="dia fim-semana"><span class="numero">1</span></div>
-                <div class="dia fim-semana"><span class="numero">2</span></div>
-                <div class="dia"><span class="numero">3</span></div>
-                <div class="dia"><span class="numero">4</span></div>
-                <div class="dia"><span class="numero">5</span></div>
-                <div class="dia"><span class="numero">6</span></div>
-                <div class="dia"><span class="numero">7</span></div>
-                <div class="dia fim-semana"><span class="numero">8</span></div>
-
-                <div class="dia fim-semana"><span class="numero">9</span></div>
-                <div class="dia"><span class="numero">10</span></div>
-                <div class="dia"><span class="numero">11</span></div>
-                <div class="dia"><span class="numero">12</span></div>
-                <div class="dia"><span class="numero">13</span></div>
-                <div class="dia"><span class="numero">14</span></div>
-                <div class="dia fim-semana"><span class="numero">15</span></div>
-
-                <div class="dia fim-semana"><span class="numero">16</span></div>
-                <div class="dia"><span class="numero">17</span></div>
-                <div class="dia"><span class="numero">18</span></div>
-                <div class="dia"><span class="numero">19</span></div>
-                <div class="dia"><span class="numero">20</span></div>
-                <div class="dia"><span class="numero">21</span></div>
-                <div class="dia fim-semana"><span class="numero">22</span></div>
-
-                <div class="dia fim-semana"><span class="numero">23</span></div>
-                <div class="dia"><span class="numero">24</span></div>
-                <div class="dia"><span class="numero">25</span></div>
-                <div class="dia"><span class="numero">26</span></div>
-                <div class="dia"><span class="numero">27</span></div>
-                <div class="dia"><span class="numero">28</span></div>
-                <div class="dia fim-semana"><span class="numero">29</span></div>
-
-                <div class="dia fim-semana"><span class="numero">30</span></div>
-                <div class="dia"><span class="numero">31</span></div>
-            </div>
+        <div class="legenda-item">
+            <span class="cor cor-evento"></span>
+            Evento institucional
         </div>
 
-
-        <!-- SETEMBRO -->
-        <div class="mes">
-            <h2>Setembro 2026</h2>
-
-            <div class="semana">
-                <div>DOM</div>
-                <div>SEG</div>
-                <div>TER</div>
-                <div>QUA</div>
-                <div>QUI</div>
-                <div>SEX</div>
-                <div>SÁB</div>
-            </div>
-
-            <div class="dias">
-
-                <div class="dia vazio"></div>
-                <div class="dia vazio"></div>
-
-                <div class="dia"><span class="numero">1</span></div>
-                <div class="dia"><span class="numero">2</span></div>
-                <div class="dia"><span class="numero">3</span></div>
-                <div class="dia"><span class="numero">4</span></div>
-                <div class="dia fim-semana"><span class="numero">5</span></div>
-
-                <div class="dia fim-semana"><span class="numero">6</span></div>
-                <div class="dia"><span class="numero">7</span></div>
-                <div class="dia"><span class="numero">8</span></div>
-                <div class="dia"><span class="numero">9</span></div>
-                <div class="dia"><span class="numero">10</span></div>
-                <div class="dia"><span class="numero">11</span></div>
-                <div class="dia fim-semana"><span class="numero">12</span></div>
-
-                <div class="dia fim-semana"><span class="numero">13</span></div>
-                <div class="dia"><span class="numero">14</span></div>
-                <div class="dia"><span class="numero">15</span></div>
-                <div class="dia"><span class="numero">16</span></div>
-                <div class="dia"><span class="numero">17</span></div>
-                <div class="dia"><span class="numero">18</span></div>
-                <div class="dia fim-semana"><span class="numero">19</span></div>
-
-                <div class="dia fim-semana"><span class="numero">20</span></div>
-                <div class="dia"><span class="numero">21</span></div>
-                <div class="dia"><span class="numero">22</span></div>
-                <div class="dia"><span class="numero">23</span></div>
-                <div class="dia"><span class="numero">24</span></div>
-                <div class="dia"><span class="numero">25</span></div>
-                <div class="dia fim-semana"><span class="numero">26</span></div>
-
-                <div class="dia fim-semana"><span class="numero">27</span></div>
-                <div class="dia"><span class="numero">28</span></div>
-                <div class="dia"><span class="numero">29</span></div>
-                <div class="dia"><span class="numero">30</span></div>
-            </div>
+        <div class="legenda-item">
+            <span class="cor cor-academico"></span>
+            Atividade acadêmica
         </div>
 
-
-        <!-- OUTUBRO -->
-        <div class="mes">
-            <h2>Outubro 2026</h2>
-
-            <div class="semana">
-                <div>DOM</div>
-                <div>SEG</div>
-                <div>TER</div>
-                <div>QUA</div>
-                <div>QUI</div>
-                <div>SEX</div>
-                <div>SÁB</div>
-            </div>
-
-            <div class="dias">
-
-                <div class="dia vazio"></div>
-                <div class="dia vazio"></div>
-                <div class="dia vazio"></div>
-                <div class="dia vazio"></div>
-
-                <div class="dia"><span class="numero">1</span></div>
-                <div class="dia"><span class="numero">2</span></div>
-                <div class="dia fim-semana"><span class="numero">3</span></div>
-
-                <div class="dia fim-semana"><span class="numero">4</span></div>
-                <div class="dia"><span class="numero">5</span></div>
-                <div class="dia"><span class="numero">6</span></div>
-                <div class="dia"><span class="numero">7</span></div>
-                <div class="dia"><span class="numero">8</span></div>
-                <div class="dia"><span class="numero">9</span></div>
-                <div class="dia fim-semana"><span class="numero">10</span></div>
-
-                <div class="dia fim-semana"><span class="numero">11</span></div>
-                <div class="dia"><span class="numero">12</span></div>
-                <div class="dia"><span class="numero">13</span></div>
-                <div class="dia"><span class="numero">14</span></div>
-                <div class="dia"><span class="numero">15</span></div>
-                <div class="dia"><span class="numero">16</span></div>
-                <div class="dia fim-semana"><span class="numero">17</span></div>
-
-                <div class="dia fim-semana"><span class="numero">18</span></div>
-                <div class="dia"><span class="numero">19</span></div>
-                <div class="dia"><span class="numero">20</span></div>
-                <div class="dia"><span class="numero">21</span></div>
-                <div class="dia"><span class="numero">22</span></div>
-                <div class="dia"><span class="numero">23</span></div>
-                <div class="dia fim-semana"><span class="numero">24</span></div>
-
-                <div class="dia fim-semana"><span class="numero">25</span></div>
-                <div class="dia"><span class="numero">26</span></div>
-                <div class="dia"><span class="numero">27</span></div>
-                <div class="dia"><span class="numero">28</span></div>
-                <div class="dia"><span class="numero">29</span></div>
-                <div class="dia"><span class="numero">30</span></div>
-                <div class="dia fim-semana"><span class="numero">31</span></div>
-
-            </div>
+        <div class="legenda-item">
+            <span class="cor cor-avaliacao"></span>
+            Avaliação
         </div>
 
-
-        <!-- NOVEMBRO -->
-        <div class="mes">
-            <h2>Novembro 2026</h2>
-
-            <div class="semana">
-                <div>DOM</div>
-                <div>SEG</div>
-                <div>TER</div>
-                <div>QUA</div>
-                <div>QUI</div>
-                <div>SEX</div>
-                <div>SÁB</div>
-            </div>
-
-            <div class="dias">
-
-                <div class="dia fim-semana"><span class="numero">1</span></div>
-                <div class="dia"><span class="numero">2</span></div>
-                <div class="dia"><span class="numero">3</span></div>
-                <div class="dia"><span class="numero">4</span></div>
-                <div class="dia"><span class="numero">5</span></div>
-                <div class="dia"><span class="numero">6</span></div>
-                <div class="dia fim-semana"><span class="numero">7</span></div>
-
-                <div class="dia fim-semana"><span class="numero">8</span></div>
-                <div class="dia"><span class="numero">9</span></div>
-                <div class="dia"><span class="numero">10</span></div>
-                <div class="dia"><span class="numero">11</span></div>
-                <div class="dia"><span class="numero">12</span></div>
-                <div class="dia"><span class="numero">13</span></div>
-                <div class="dia fim-semana"><span class="numero">14</span></div>
-
-                <div class="dia fim-semana"><span class="numero">15</span></div>
-                <div class="dia"><span class="numero">16</span></div>
-                <div class="dia"><span class="numero">17</span></div>
-                <div class="dia"><span class="numero">18</span></div>
-                <div class="dia"><span class="numero">19</span></div>
-                <div class="dia"><span class="numero">20</span></div>
-                <div class="dia fim-semana"><span class="numero">21</span></div>
-
-                <div class="dia fim-semana"><span class="numero">22</span></div>
-                <div class="dia"><span class="numero">23</span></div>
-                <div class="dia"><span class="numero">24</span></div>
-                <div class="dia"><span class="numero">25</span></div>
-                <div class="dia"><span class="numero">26</span></div>
-                <div class="dia"><span class="numero">27</span></div>
-                <div class="dia fim-semana"><span class="numero">28</span></div>
-
-                <div class="dia fim-semana"><span class="numero">29</span></div>
-                <div class="dia"><span class="numero">30</span></div>
-
-            </div>
+        <div class="legenda-item">
+            <span class="cor cor-atencao"></span>
+            Prazo / matrícula
         </div>
 
+        <div class="legenda-item">
+            <span class="cor cor-nao-letivo"></span>
+            Feriado / dia não letivo
+        </div>
 
-        <!-- DEZEMBRO -->
-        <div class="mes">
-            <h2>Dezembro 2026</h2>
-
-            <div class="semana">
-                <div>DOM</div>
-                <div>SEG</div>
-                <div>TER</div>
-                <div>QUA</div>
-                <div>QUI</div>
-                <div>SEX</div>
-                <div>SÁB</div>
-            </div>
-
-            <div class="dias">
-
-                <div class="dia vazio"></div>
-                <div class="dia vazio"></div>
-
-                <div class="dia"><span class="numero">1</span></div>
-                <div class="dia"><span class="numero">2</span></div>
-                <div class="dia"><span class="numero">3</span></div>
-                <div class="dia"><span class="numero">4</span></div>
-                <div class="dia fim-semana"><span class="numero">5</span></div>
-
-                <div class="dia fim-semana"><span class="numero">6</span></div>
-                <div class="dia"><span class="numero">7</span></div>
-                <div class="dia"><span class="numero">8</span></div>
-                <div class="dia"><span class="numero">9</span></div>
-                <div class="dia"><span class="numero">10</span></div>
-                <div class="dia"><span class="numero">11</span></div>
-                <div class="dia fim-semana"><span class="numero">12</span></div>
-
-                <div class="dia fim-semana"><span class="numero">13</span></div>
-                <div class="dia"><span class="numero">14</span></div>
-                <div class="dia"><span class="numero">15</span></div>
-                <div class="dia"><span class="numero">16</span></div>
-                <div class="dia"><span class="numero">17</span></div>
-                <div class="dia"><span class="numero">18</span></div>
-                <div class="dia fim-semana"><span class="numero">19</span></div>
-
-                <div class="dia fim-semana"><span class="numero">20</span></div>
-                <div class="dia"><span class="numero">21</span></div>
-                <div class="dia"><span class="numero">22</span></div>
-                <div class="dia"><span class="numero">23</span></div>
-                <div class="dia"><span class="numero">24</span></div>
-                <div class="dia"><span class="numero">25</span></div>
-                <div class="dia fim-semana"><span class="numero">26</span></div>
-
-                <div class="dia fim-semana"><span class="numero">27</span></div>
-                <div class="dia"><span class="numero">28</span></div>
-                <div class="dia"><span class="numero">29</span></div>
-                <div class="dia"><span class="numero">30</span></div>
-                <div class="dia"><span class="numero">31</span></div>
-
-            </div>
+        <div class="legenda-item">
+            <span class="cor cor-especial"></span>
+            Processo seletivo
         </div>
 
     </div>
 
+
+    <div
+        class="calendarios"
+        id="calendarios">
+    </div>
+
+
     <footer>
-        MEE120 - Diurno | 2º semestre de 2026
+        MEE120 - Diurno |
+        Calendário Acadêmico FEI |
+        2º semestre de 2026
     </footer>
 
 </div>
 
+
+<script>
+
+/* =========================================================
+   CONFIGURAÇÃO
+   ========================================================= */
+
+const ano = 2026;
+
+const meses = [
+    { numero: 7, nome: "Agosto" },
+    { numero: 8, nome: "Setembro" },
+    { numero: 9, nome: "Outubro" },
+    { numero: 10, nome: "Novembro" },
+    { numero: 11, nome: "Dezembro" }
+];
+
+
+/* =========================================================
+   EVENTOS DO CALENDÁRIO ACADÊMICO FEI
+   ========================================================= */
+
+const eventos = [
+
+    /* AGOSTO */
+
+    {
+        inicio: "2026-08-04",
+        fim: "2026-08-05",
+        texto: "Semana da Qualidade",
+        tipo: "institucional"
+    },
+
+    {
+        inicio: "2026-08-06",
+        fim: "2026-08-07",
+        texto: "Programa de Desenvolvimento FEI",
+        tipo: "institucional"
+    },
+
+    {
+        inicio: "2026-08-10",
+        fim: "2026-08-12",
+        texto: "Integração dos calouros",
+        tipo: "academico"
+    },
+
+    {
+        inicio: "2026-08-10",
+        fim: "2026-08-10",
+        texto: "Início do período letivo",
+        tipo: "academico"
+    },
+
+    {
+        inicio: "2026-08-10",
+        fim: "2026-08-15",
+        texto: "Exame de Formandos",
+        tipo: "academico"
+    },
+
+    {
+        inicio: "2026-08-20",
+        fim: "2026-08-20",
+        texto: "Aniversário de São Bernardo do Campo",
+        tipo: "nao-letivo"
+    },
+
+    {
+        inicio: "2026-08-24",
+        fim: "2026-08-24",
+        texto: "Término do semestre dos formandos",
+        tipo: "atencao"
+    },
+
+    {
+        inicio: "2026-08-25",
+        fim: "2026-08-26",
+        texto: "Matrícula — alunos reprovados no Exame de Formandos",
+        tipo: "atencao"
+    },
+
+
+    /* SETEMBRO */
+
+    {
+        inicio: "2026-09-07",
+        fim: "2026-09-07",
+        texto: "Independência do Brasil",
+        tipo: "nao-letivo"
+    },
+
+    {
+        inicio: "2026-09-19",
+        fim: "2026-09-19",
+        texto: "FEI Portas Abertas — dia não letivo",
+        tipo: "nao-letivo"
+    },
+
+    {
+        inicio: "2026-09-22",
+        fim: "2026-10-03",
+        texto: "Avaliações Parciais",
+        tipo: "avaliacao"
+    },
+
+
+    /* OUTUBRO */
+
+    {
+        inicio: "2026-10-12",
+        fim: "2026-10-12",
+        texto: "Nossa Senhora da Aparecida",
+        tipo: "nao-letivo"
+    },
+
+    {
+        inicio: "2026-10-13",
+        fim: "2026-10-13",
+        texto: "Comemoração do Dia do Professor — dia não letivo",
+        tipo: "nao-letivo"
+    },
+
+    {
+        inicio: "2026-10-14",
+        fim: "2026-10-24",
+        texto: "Escolha de disciplinas optativas",
+        tipo: "academico"
+    },
+
+    {
+        inicio: "2026-10-20",
+        fim: "2026-10-21",
+        texto: "6º Congresso de Inovação e Megatendências — dia letivo",
+        tipo: "institucional"
+    },
+
+    {
+        inicio: "2026-10-22",
+        fim: "2026-10-22",
+        texto: "XV SICFEI — dia letivo",
+        tipo: "institucional"
+    },
+
+
+    /* NOVEMBRO */
+
+    {
+        inicio: "2026-11-02",
+        fim: "2026-11-02",
+        texto: "Finados",
+        tipo: "nao-letivo"
+    },
+
+    {
+        inicio: "2026-11-11",
+        fim: "2026-11-11",
+        texto: "INOVAFEI",
+        tipo: "atencao"
+    },
+
+    {
+        inicio: "2026-11-15",
+        fim: "2026-11-15",
+        texto: "Proclamação da República",
+        tipo: "nao-letivo"
+    },
+
+    {
+        inicio: "2026-11-16",
+        fim: "2026-11-16",
+        texto: "Prazo máximo para trancamento de matrícula",
+        tipo: "atencao"
+    },
+
+    {
+        inicio: "2026-11-19",
+        fim: "2026-12-01",
+        texto: "Avaliações Finais",
+        tipo: "avaliacao"
+    },
+
+    {
+        inicio: "2026-11-20",
+        fim: "2026-11-20",
+        texto: "Consciência Negra",
+        tipo: "nao-letivo"
+    },
+
+    {
+        inicio: "2026-11-29",
+        fim: "2026-11-29",
+        texto: "Processo Seletivo — 1º semestre de 2027",
+        tipo: "especial"
+    },
+
+
+    /* DEZEMBRO */
+
+    {
+        inicio: "2026-12-02",
+        fim: "2026-12-05",
+        texto: "Atividades Especiais",
+        tipo: "academico"
+    },
+
+    {
+        inicio: "2026-12-07",
+        fim: "2026-12-15",
+        texto: "Avaliações Substitutivas",
+        tipo: "avaliacao"
+    },
+
+    {
+        inicio: "2026-12-18",
+        fim: "2026-12-18",
+        texto: "Término do período letivo",
+        tipo: "nao-letivo"
+    },
+
+    {
+        inicio: "2026-12-25",
+        fim: "2026-12-25",
+        texto: "Natal",
+        tipo: "nao-letivo"
+    }
+
+];
+
+
+/* =========================================================
+   FUNÇÕES
+   ========================================================= */
+
+function formatarData(ano, mes, dia) {
+
+    return (
+        ano +
+        "-" +
+        String(mes + 1).padStart(2, "0") +
+        "-" +
+        String(dia).padStart(2, "0")
+    );
+
+}
+
+
+function eventosDoDia(data) {
+
+    return eventos.filter(evento =>
+        data >= evento.inicio &&
+        data <= evento.fim
+    );
+
+}
+
+
+function criarCalendario(mes, nomeMes) {
+
+    const calendario = document.createElement("div");
+
+    calendario.className = "mes";
+
+
+    const titulo = document.createElement("h2");
+
+    titulo.textContent =
+        nomeMes + " " + ano;
+
+    calendario.appendChild(titulo);
+
+
+    /* Cabeçalho da semana */
+
+    const semana = document.createElement("div");
+
+    semana.className = "semana";
+
+    [
+        "DOM",
+        "SEG",
+        "TER",
+        "QUA",
+        "QUI",
+        "SEX",
+        "SÁB"
+    ].forEach(nome => {
+
+        const item =
+            document.createElement("div");
+
+        item.textContent = nome;
+
+        semana.appendChild(item);
+
+    });
+
+    calendario.appendChild(semana);
+
+
+    /* Dias */
+
+    const dias =
+        document.createElement("div");
+
+    dias.className = "dias";
+
+
+    const primeiroDia =
+        new Date(ano, mes, 1).getDay();
+
+    const quantidadeDias =
+        new Date(
+            ano,
+            mes + 1,
+            0
+        ).getDate();
+
+
+    /* Espaços vazios antes do dia 1 */
+
+    for (
+        let i = 0;
+        i < primeiroDia;
+        i++
+    ) {
+
+        const vazio =
+            document.createElement("div");
+
+        vazio.className =
+            "dia vazio";
+
+        dias.appendChild(vazio);
+
+    }
+
+
+    /* Dias do mês */
+
+    for (
+        let dia = 1;
+        dia <= quantidadeDias;
+        dia++
+    ) {
+
+        const dataAtual =
+            new Date(
+                ano,
+                mes,
+                dia
+            );
+
+        const dataTexto =
+            formatarData(
+                ano,
+                mes,
+                dia
+            );
+
+
+        const elementoDia =
+            document.createElement("div");
+
+        elementoDia.className = "dia";
+
+
+        /* Domingo */
+
+        if (
+            dataAtual.getDay() === 0
+        ) {
+
+            elementoDia.classList.add(
+                "domingo"
+            );
+
+        }
+
+
+        const numero =
+            document.createElement("span");
+
+        numero.className = "numero";
+
+        numero.textContent = dia;
+
+        elementoDia.appendChild(numero);
+
+
+        /* Eventos desse dia */
+
+        const eventosHoje =
+            eventosDoDia(dataTexto);
+
+
+        eventosHoje.forEach(evento => {
+
+            const bloco =
+                document.createElement("div");
+
+            bloco.className =
+                "evento evento-" +
+                evento.tipo;
+
+            bloco.textContent =
+                evento.texto;
+
+            elementoDia.appendChild(bloco);
+
+
+            if (
+                evento.tipo ===
+                "nao-letivo"
+            ) {
+
+                elementoDia.classList.add(
+                    "nao-letivo"
+                );
+
+            }
+
+        });
+
+
+        dias.appendChild(
+            elementoDia
+        );
+
+    }
+
+
+    calendario.appendChild(dias);
+
+    return calendario;
+
+}
+
+
+/* =========================================================
+   MONTAGEM
+   ========================================================= */
+
+const area =
+    document.getElementById(
+        "calendarios"
+    );
+
+
+meses.forEach(mes => {
+
+    area.appendChild(
+        criarCalendario(
+            mes.numero,
+            mes.nome
+        )
+    );
+
+});
+
+</script>
+
 </body>
+
 </html>
