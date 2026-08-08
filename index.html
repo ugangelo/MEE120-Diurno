@@ -70,10 +70,6 @@
             border-radius: 4px;
         }
 
-        .cor-evento {
-            background: #86c5da;
-        }
-
         .cor-academico {
             background: #a9c99a;
         }
@@ -90,8 +86,8 @@
             background: #ef8585;
         }
 
-        .cor-especial {
-            background: #e8a7d3;
+        .cor-desativado {
+            background: #e1e4e8;
         }
 
 
@@ -173,6 +169,18 @@
         }
 
 
+        /* DIAS ANTERIORES AO INÍCIO */
+
+        .desativado {
+            background: #e1e4e8 !important;
+            color: #92979d !important;
+        }
+
+        .desativado .numero {
+            color: #92979d !important;
+        }
+
+
         /* EVENTOS */
 
         .evento {
@@ -183,10 +191,6 @@
             font-size: 10px;
             line-height: 1.25;
             font-weight: 600;
-        }
-
-        .evento-institucional {
-            background: #86c5da;
         }
 
         .evento-academico {
@@ -205,12 +209,8 @@
             background: #ef8585;
         }
 
-        .evento-especial {
-            background: #e8a7d3;
-        }
 
-
-        /* QUANDO O DIA INTEIRO NÃO É LETIVO */
+        /* DIA NÃO LETIVO */
 
         .dia.nao-letivo {
             background: #f8c6c6;
@@ -261,11 +261,6 @@
     <div class="legenda">
 
         <div class="legenda-item">
-            <span class="cor cor-evento"></span>
-            Evento institucional
-        </div>
-
-        <div class="legenda-item">
             <span class="cor cor-academico"></span>
             Atividade acadêmica
         </div>
@@ -277,7 +272,7 @@
 
         <div class="legenda-item">
             <span class="cor cor-atencao"></span>
-            Prazo / matrícula
+            Prazo
         </div>
 
         <div class="legenda-item">
@@ -286,8 +281,8 @@
         </div>
 
         <div class="legenda-item">
-            <span class="cor cor-especial"></span>
-            Processo seletivo
+            <span class="cor cor-desativado"></span>
+            Período anterior às aulas
         </div>
 
     </div>
@@ -301,7 +296,6 @@
 
     <footer>
         MEE120 - Diurno |
-        Calendário Acadêmico FEI |
         2º semestre de 2026
     </footer>
 
@@ -326,33 +320,12 @@ const meses = [
 
 
 /* =========================================================
-   EVENTOS DO CALENDÁRIO ACADÊMICO FEI
+   EVENTOS RELEVANTES PARA A DISCIPLINA
    ========================================================= */
 
 const eventos = [
 
     /* AGOSTO */
-
-    {
-        inicio: "2026-08-04",
-        fim: "2026-08-05",
-        texto: "Semana da Qualidade",
-        tipo: "institucional"
-    },
-
-    {
-        inicio: "2026-08-06",
-        fim: "2026-08-07",
-        texto: "Programa de Desenvolvimento FEI",
-        tipo: "institucional"
-    },
-
-    {
-        inicio: "2026-08-10",
-        fim: "2026-08-12",
-        texto: "Integração dos calouros",
-        tipo: "academico"
-    },
 
     {
         inicio: "2026-08-10",
@@ -362,31 +335,10 @@ const eventos = [
     },
 
     {
-        inicio: "2026-08-10",
-        fim: "2026-08-15",
-        texto: "Exame de Formandos",
-        tipo: "academico"
-    },
-
-    {
         inicio: "2026-08-20",
         fim: "2026-08-20",
         texto: "Aniversário de São Bernardo do Campo",
         tipo: "nao-letivo"
-    },
-
-    {
-        inicio: "2026-08-24",
-        fim: "2026-08-24",
-        texto: "Término do semestre dos formandos",
-        tipo: "atencao"
-    },
-
-    {
-        inicio: "2026-08-25",
-        fim: "2026-08-26",
-        texto: "Matrícula — alunos reprovados no Exame de Formandos",
-        tipo: "atencao"
     },
 
 
@@ -409,7 +361,7 @@ const eventos = [
     {
         inicio: "2026-09-22",
         fim: "2026-10-03",
-        texto: "Avaliações Parciais",
+        texto: "P1",
         tipo: "avaliacao"
     },
 
@@ -426,7 +378,7 @@ const eventos = [
     {
         inicio: "2026-10-13",
         fim: "2026-10-13",
-        texto: "Comemoração do Dia do Professor — dia não letivo",
+        texto: "Dia do Professor — dia não letivo",
         tipo: "nao-letivo"
     },
 
@@ -435,20 +387,6 @@ const eventos = [
         fim: "2026-10-24",
         texto: "Escolha de disciplinas optativas",
         tipo: "academico"
-    },
-
-    {
-        inicio: "2026-10-20",
-        fim: "2026-10-21",
-        texto: "6º Congresso de Inovação e Megatendências — dia letivo",
-        tipo: "institucional"
-    },
-
-    {
-        inicio: "2026-10-22",
-        fim: "2026-10-22",
-        texto: "XV SICFEI — dia letivo",
-        tipo: "institucional"
     },
 
 
@@ -465,7 +403,7 @@ const eventos = [
         inicio: "2026-11-11",
         fim: "2026-11-11",
         texto: "INOVAFEI",
-        tipo: "atencao"
+        tipo: "academico"
     },
 
     {
@@ -478,14 +416,14 @@ const eventos = [
     {
         inicio: "2026-11-16",
         fim: "2026-11-16",
-        texto: "Prazo máximo para trancamento de matrícula",
+        texto: "Prazo máximo para trancamento",
         tipo: "atencao"
     },
 
     {
         inicio: "2026-11-19",
         fim: "2026-12-01",
-        texto: "Avaliações Finais",
+        texto: "P2",
         tipo: "avaliacao"
     },
 
@@ -496,27 +434,13 @@ const eventos = [
         tipo: "nao-letivo"
     },
 
-    {
-        inicio: "2026-11-29",
-        fim: "2026-11-29",
-        texto: "Processo Seletivo — 1º semestre de 2027",
-        tipo: "especial"
-    },
-
 
     /* DEZEMBRO */
 
     {
-        inicio: "2026-12-02",
-        fim: "2026-12-05",
-        texto: "Atividades Especiais",
-        tipo: "academico"
-    },
-
-    {
         inicio: "2026-12-07",
         fim: "2026-12-15",
-        texto: "Avaliações Substitutivas",
+        texto: "P3",
         tipo: "avaliacao"
     },
 
@@ -566,12 +490,14 @@ function eventosDoDia(data) {
 
 function criarCalendario(mes, nomeMes) {
 
-    const calendario = document.createElement("div");
+    const calendario =
+        document.createElement("div");
 
     calendario.className = "mes";
 
 
-    const titulo = document.createElement("h2");
+    const titulo =
+        document.createElement("h2");
 
     titulo.textContent =
         nomeMes + " " + ano;
@@ -579,9 +505,10 @@ function criarCalendario(mes, nomeMes) {
     calendario.appendChild(titulo);
 
 
-    /* Cabeçalho da semana */
+    /* CABEÇALHO DA SEMANA */
 
-    const semana = document.createElement("div");
+    const semana =
+        document.createElement("div");
 
     semana.className = "semana";
 
@@ -607,7 +534,7 @@ function criarCalendario(mes, nomeMes) {
     calendario.appendChild(semana);
 
 
-    /* Dias */
+    /* ÁREA DOS DIAS */
 
     const dias =
         document.createElement("div");
@@ -616,7 +543,11 @@ function criarCalendario(mes, nomeMes) {
 
 
     const primeiroDia =
-        new Date(ano, mes, 1).getDay();
+        new Date(
+            ano,
+            mes,
+            1
+        ).getDay();
 
     const quantidadeDias =
         new Date(
@@ -626,7 +557,7 @@ function criarCalendario(mes, nomeMes) {
         ).getDate();
 
 
-    /* Espaços vazios antes do dia 1 */
+    /* ESPAÇOS VAZIOS ANTES DO DIA 1 */
 
     for (
         let i = 0;
@@ -645,7 +576,7 @@ function criarCalendario(mes, nomeMes) {
     }
 
 
-    /* Dias do mês */
+    /* DIAS DO MÊS */
 
     for (
         let dia = 1;
@@ -674,10 +605,25 @@ function criarCalendario(mes, nomeMes) {
         elementoDia.className = "dia";
 
 
-        /* Domingo */
+        /* 1 A 8 DE AGOSTO EM CINZA */
 
         if (
-            dataAtual.getDay() === 0
+            dataTexto >= "2026-08-01" &&
+            dataTexto <= "2026-08-08"
+        ) {
+
+            elementoDia.classList.add(
+                "desativado"
+            );
+
+        }
+
+
+        /* DOMINGOS */
+
+        if (
+            dataAtual.getDay() === 0 &&
+            !elementoDia.classList.contains("desativado")
         ) {
 
             elementoDia.classList.add(
@@ -686,6 +632,8 @@ function criarCalendario(mes, nomeMes) {
 
         }
 
+
+        /* NÚMERO DO DIA */
 
         const numero =
             document.createElement("span");
@@ -697,7 +645,7 @@ function criarCalendario(mes, nomeMes) {
         elementoDia.appendChild(numero);
 
 
-        /* Eventos desse dia */
+        /* EVENTOS DO DIA */
 
         const eventosHoje =
             eventosDoDia(dataTexto);
@@ -747,7 +695,7 @@ function criarCalendario(mes, nomeMes) {
 
 
 /* =========================================================
-   MONTAGEM
+   MONTAGEM DO CALENDÁRIO
    ========================================================= */
 
 const area =
