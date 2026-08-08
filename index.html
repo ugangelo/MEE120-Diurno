@@ -90,6 +90,39 @@
             background: #e1e4e8;
         }
 
+        .acoes-cronograma {
+            display: flex;
+            justify-content: flex-end;
+            margin: -12px 0 25px;
+        }
+
+        .link-impressao {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            min-height: 44px;
+            padding: 10px 15px;
+            border: 1px solid #1f4e79;
+            border-radius: 8px;
+            background: white;
+            color: #1f4e79;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .link-impressao:hover,
+        .link-impressao:focus-visible {
+            background: #1f4e79;
+            color: white;
+            outline: none;
+        }
+
+        .link-impressao:focus-visible {
+            box-shadow: 0 0 0 3px rgba(31, 78, 121, 0.3);
+        }
+
 
         /* CALENDÁRIOS */
 
@@ -414,6 +447,11 @@
                 grid-template-columns: 1fr;
             }
 
+            .acoes-cronograma,
+            .link-impressao {
+                width: 100%;
+            }
+
         }
 
     </style>
@@ -463,6 +501,17 @@
             Período anterior às aulas
         </div>
 
+    </div>
+
+    <div class="acoes-cronograma">
+        <a
+            class="link-impressao"
+            href="output/pdf/MEE120-Diurno-cronograma.pdf"
+            target="_blank"
+            rel="noopener">
+            <span aria-hidden="true">↓</span>
+            Versão impressa do cronograma (PDF)
+        </a>
     </div>
 
 
