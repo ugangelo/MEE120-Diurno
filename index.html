@@ -64,21 +64,6 @@
             font-size: 13px;
         }
 
-        .administracao {
-            margin-left: auto;
-        }
-
-        .botao-admin {
-            display: inline-block;
-            padding: 9px 13px;
-            border-radius: 7px;
-            background: #1f4e79;
-            color: white;
-            font-size: 13px;
-            font-weight: bold;
-            text-decoration: none;
-        }
-
         .cor {
             width: 16px;
             height: 16px;
@@ -158,6 +143,13 @@
             border-right: none;
         }
 
+        .dia:not(.vazio):hover,
+        .dia:not(.vazio):focus-within {
+            z-index: 1;
+            outline: 2px solid #1f4e79;
+            outline-offset: -2px;
+        }
+
         .numero {
             display: inline-flex;
             align-items: center;
@@ -179,25 +171,75 @@
             background: #f0f2f4;
         }
 
-        .dia-clicavel {
-            cursor: pointer;
-        }
-
-        .dia-clicavel:hover,
-        .dia-clicavel:focus-visible {
-            outline: 2px solid #1f4e79;
-            outline-offset: -2px;
-        }
-
-        .conteudo-aula {
+        .conteudo-aula,
+        .titulo-aula {
             margin-top: 5px;
             padding: 4px 5px;
             border-radius: 5px;
             background: #d7e8f7;
             color: #163a5b;
+            cursor: pointer;
             font-size: 10px;
             line-height: 1.25;
             font-weight: 600;
+            text-align: center;
+        }
+
+        .titulo-aula {
+            background: #e5f0f8;
+            font-weight: 500;
+        }
+
+        .experimento-aula {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            margin-top: 5px;
+            padding: 4px 5px;
+            border-radius: 5px;
+            background: #d8c4ef;
+            color: #4b2673;
+            cursor: pointer;
+            font-size: 10px;
+            line-height: 1.25;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .conteudo-aula:hover,
+        .conteudo-aula:focus-visible,
+        .titulo-aula:hover,
+        .titulo-aula:focus-visible,
+        .experimento-aula:hover,
+        .experimento-aula:focus-visible {
+            background: #bddaf1;
+            outline: 2px solid #1f4e79;
+            outline-offset: 1px;
+        }
+
+        .experimento-aula:hover,
+        .experimento-aula:focus-visible {
+            background: #c6a9e5;
+            outline-color: #684090;
+        }
+
+        .tooltip-aula {
+            position: fixed;
+            z-index: 20;
+            width: min(460px, calc(100vw - 24px));
+            padding: 12px 14px;
+            border-radius: 8px;
+            background: #173a59;
+            color: white;
+            box-shadow: 0 7px 20px rgba(0,0,0,0.25);
+            font-size: 13px;
+            line-height: 1.45;
+            pointer-events: none;
+        }
+
+        .tooltip-aula[hidden] {
+            display: none;
         }
 
         /* DIAS ANTERIORES AO INÍCIO */
@@ -303,7 +345,58 @@
 
         .modal-texto {
             line-height: 1.55;
+        }
+
+        .data-conteudo {
+            margin: 0 0 13px;
+            color: #5f6b73;
+            font-size: 13px;
+            text-transform: capitalize;
+        }
+
+        .referencia-aula {
+            margin: 0 0 10px;
+            font-weight: bold;
+        }
+
+        .texto-aula {
+            margin: 0;
             white-space: pre-wrap;
+        }
+
+        .tabela-aula {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+
+        .tabela-aula th,
+        .tabela-aula td {
+            padding: 7px 8px;
+            border: 1px solid #b8c6d1;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        .tabela-aula th {
+            background: #d7e8f7;
+            color: #163a5b;
+        }
+
+        .tabela-aula th:first-child,
+        .tabela-aula td:first-child,
+        .tabela-aula th:last-child,
+        .tabela-aula td:last-child {
+            width: 1%;
+            white-space: nowrap;
+        }
+
+        .tooltip-aula .referencia-aula {
+            color: #d7e8f7;
+        }
+
+        .tooltip-aula .tabela-aula td {
+            border-color: #7690a5;
         }
 
 
@@ -319,11 +412,6 @@
 
             .calendarios {
                 grid-template-columns: 1fr;
-            }
-
-            .administracao {
-                width: 100%;
-                margin-left: 0;
             }
 
         }
@@ -375,16 +463,6 @@
             Período anterior às aulas
         </div>
 
-        <div class="administracao">
-            <a
-                class="botao-admin"
-                href="https://github.com/ugangelo/MEE120-Diurno/edit/main/conteudos.json"
-                target="_blank"
-                rel="noopener noreferrer">
-                Cadastrar conteúdo
-            </a>
-        </div>
-
     </div>
 
 
@@ -431,6 +509,16 @@
 </div>
 
 
+<div
+    class="tooltip-aula"
+    id="tooltip-aula"
+    role="tooltip"
+    hidden>
+</div>
+
+
+<script src="conteudos.js"></script>
+
 <script>
 
 /* =========================================================
@@ -447,7 +535,7 @@ const meses = [
     { numero: 11, nome: "Dezembro" }
 ];
 
-let conteudos = {};
+const conteudos = window.conteudosAulas || {};
 
 
 /* =========================================================
@@ -513,14 +601,6 @@ const eventos = [
         tipo: "nao-letivo"
     },
 
-    {
-        inicio: "2026-10-14",
-        fim: "2026-10-24",
-        texto: "Escolha de disciplinas optativas",
-        tipo: "academico"
-    },
-
-
     /* NOVEMBRO */
 
     {
@@ -545,14 +625,14 @@ const eventos = [
     },
 
     {
-        inicio: "2026-11-16",
-        fim: "2026-11-16",
-        texto: "Prazo máximo para trancamento",
-        tipo: "atencao"
+        inicio: "2026-11-19",
+        fim: "2026-11-19",
+        texto: "P2",
+        tipo: "avaliacao"
     },
 
     {
-        inicio: "2026-11-19",
+        inicio: "2026-11-21",
         fim: "2026-12-01",
         texto: "P2",
         tipo: "avaliacao"
@@ -619,6 +699,29 @@ function eventosDoDia(data) {
 }
 
 
+function tipoAulaDoDia(dataAtual, dataTexto) {
+
+    const dentroDoPeriodoLetivo =
+        dataTexto >= "2026-08-10" &&
+        dataTexto <= "2026-12-18";
+
+    if (!dentroDoPeriodoLetivo) {
+        return null;
+    }
+
+    if (dataAtual.getDay() === 2) {
+        return "Laboratório";
+    }
+
+    if (dataAtual.getDay() === 4) {
+        return "Teoria";
+    }
+
+    return null;
+
+}
+
+
 function abrirConteudo(data) {
 
     const modal =
@@ -642,15 +745,148 @@ function abrirConteudo(data) {
         ).format(new Date(data + "T12:00:00Z"));
 
     titulo.textContent =
-        conteudo?.titulo || "Conteúdo da aula";
+        conteudo?.nome ||
+        (
+            Array.isArray(conteudo?.titulo)
+                ? conteudo.titulo.join(" e ")
+                : conteudo?.titulo
+        ) ||
+        "Conteúdo da aula";
 
-    texto.textContent = conteudo?.conteudo
-        ? dataFormatada + "\n\n" + conteudo.conteudo
-        : dataFormatada + "\n\nNenhum conteúdo cadastrado para este dia.";
+    texto.replaceChildren();
+
+    const dataElemento =
+        document.createElement("p");
+
+    dataElemento.className = "data-conteudo";
+    dataElemento.textContent = dataFormatada;
+    texto.appendChild(dataElemento);
+
+    preencherDetalhes(
+        texto,
+        conteudo || {
+            conteudo:
+                "Nenhum conteúdo cadastrado para este dia."
+        }
+    );
 
     modal.hidden = false;
 
     document.getElementById("modal-fechar").focus();
+
+}
+
+
+function preencherDetalhes(elemento, conteudo) {
+
+    if (conteudo.referencia) {
+
+        const referencia =
+            document.createElement("p");
+
+        referencia.className = "referencia-aula";
+        referencia.textContent = conteudo.referencia;
+        elemento.appendChild(referencia);
+
+    }
+
+    if (
+        Array.isArray(conteudo.itens) &&
+        conteudo.itens.length > 0
+    ) {
+
+        const tabela =
+            document.createElement("table");
+
+        tabela.className = "tabela-aula";
+
+        const cabecalho = tabela.createTHead();
+        const linhaCabecalho = cabecalho.insertRow();
+
+        ["Cap.", "Conteúdo", "Pág."].forEach(rotulo => {
+            const celula = document.createElement("th");
+            celula.scope = "col";
+            celula.textContent = rotulo;
+            linhaCabecalho.appendChild(celula);
+        });
+
+        const corpo = tabela.createTBody();
+
+        conteudo.itens.forEach(item => {
+
+            const linha = corpo.insertRow();
+
+            [
+                item.capitulo,
+                item.conteudo,
+                item.pagina
+            ].forEach(valor => {
+                const celula = linha.insertCell();
+                celula.textContent = valor ?? "";
+            });
+
+        });
+
+        elemento.appendChild(tabela);
+
+        return;
+
+    }
+
+    const texto =
+        document.createElement("p");
+
+    texto.className = "texto-aula";
+    texto.textContent =
+        conteudo.conteudo ||
+        "Nenhum conteúdo detalhado cadastrado.";
+
+    elemento.appendChild(texto);
+
+}
+
+
+function mostrarTooltip(elemento, conteudo) {
+
+    const tooltip =
+        document.getElementById("tooltip-aula");
+
+    tooltip.replaceChildren();
+    preencherDetalhes(tooltip, conteudo);
+    tooltip.hidden = false;
+
+    const margem = 12;
+    const espaco = 8;
+    const posicao = elemento.getBoundingClientRect();
+    const largura = tooltip.offsetWidth;
+    const altura = tooltip.offsetHeight;
+
+    let esquerda =
+        posicao.left + (posicao.width - largura) / 2;
+
+    esquerda = Math.max(
+        margem,
+        Math.min(
+            esquerda,
+            window.innerWidth - largura - margem
+        )
+    );
+
+    let topo = posicao.bottom + espaco;
+
+    if (topo + altura > window.innerHeight - margem) {
+        topo = posicao.top - altura - espaco;
+    }
+
+    tooltip.style.left = esquerda + "px";
+    tooltip.style.top = Math.max(margem, topo) + "px";
+
+}
+
+
+function esconderTooltip() {
+
+    document.getElementById("tooltip-aula").hidden = true;
 
 }
 
@@ -860,10 +1096,39 @@ function criarCalendario(mes, nomeMes) {
 
         /* CONTEÚDO DA AULA */
 
+        const diaSemAula =
+            eventosHoje.some(evento =>
+                evento.tipo === "nao-letivo" ||
+                evento.tipo === "avaliacao"
+            );
+
+        const tipoAula =
+            diaSemAula
+                ? null
+                : tipoAulaDoDia(
+                    dataAtual,
+                    dataTexto
+                );
+
+        const dadosDoDia =
+            conteudos[dataTexto];
+
         const conteudoDoDia =
-            dataAtual.getDay() !== 0 &&
-            !elementoDia.classList.contains("desativado")
-                ? conteudos[dataTexto]
+            tipoAula
+                ? {
+                    ...dadosDoDia,
+                    nome:
+                        dadosDoDia?.nome ||
+                        tipoAula,
+                    conteudo:
+                        dadosDoDia?.conteudo ||
+                        (
+                            dadosDoDia?.itens?.length
+                                ? ""
+                                : tipoAula +
+                                  ". Conteúdo ainda não cadastrado."
+                        )
+                }
                 : null;
 
         if (conteudoDoDia) {
@@ -875,33 +1140,43 @@ function criarCalendario(mes, nomeMes) {
                 "conteudo-aula";
 
             blocoConteudo.textContent =
-                conteudoDoDia.titulo || "Conteúdo da aula";
+                conteudoDoDia.nome ||
+                conteudoDoDia.titulo ||
+                "Conteúdo da aula";
 
-            elementoDia.appendChild(
-                blocoConteudo
+            blocoConteudo.tabIndex = 0;
+            blocoConteudo.setAttribute(
+                "role",
+                "button"
+            );
+            blocoConteudo.setAttribute(
+                "aria-describedby",
+                "tooltip-aula"
             );
 
-        }
-
-
-        if (
-            dataAtual.getDay() !== 0 &&
-            !elementoDia.classList.contains("desativado")
-        ) {
-
-            elementoDia.classList.add("dia-clicavel");
-            elementoDia.tabIndex = 0;
-            elementoDia.setAttribute(
-                "aria-label",
-                "Ver conteúdo de " + dataTexto
+            blocoConteudo.addEventListener(
+                "focus",
+                () => mostrarTooltip(
+                    elementoDia,
+                    conteudoDoDia
+                )
             );
 
-            elementoDia.addEventListener(
+            blocoConteudo.addEventListener(
+                "blur",
+                esconderTooltip
+            );
+
+            blocoConteudo.addEventListener(
                 "click",
-                () => abrirConteudo(dataTexto)
+                evento => {
+                    evento.stopPropagation();
+                    esconderTooltip();
+                    abrirConteudo(dataTexto);
+                }
             );
 
-            elementoDia.addEventListener(
+            blocoConteudo.addEventListener(
                 "keydown",
                 evento => {
                     if (
@@ -909,9 +1184,150 @@ function criarCalendario(mes, nomeMes) {
                         evento.key === " "
                     ) {
                         evento.preventDefault();
+                        esconderTooltip();
                         abrirConteudo(dataTexto);
                     }
                 }
+            );
+
+            elementoDia.appendChild(
+                blocoConteudo
+            );
+
+            const titulosAula =
+                Array.isArray(conteudoDoDia.titulo)
+                    ? conteudoDoDia.titulo
+                    : [conteudoDoDia.titulo];
+
+            titulosAula
+                .filter(Boolean)
+                .forEach(titulo => {
+
+                const tituloAula =
+                    document.createElement("div");
+
+                tituloAula.className = "titulo-aula";
+                tituloAula.textContent =
+                    titulo;
+                tituloAula.tabIndex = 0;
+                tituloAula.setAttribute(
+                    "role",
+                    "button"
+                );
+
+                tituloAula.addEventListener(
+                    "click",
+                    evento => {
+                        evento.stopPropagation();
+                        esconderTooltip();
+                        abrirConteudo(dataTexto);
+                    }
+                );
+
+                tituloAula.addEventListener(
+                    "keydown",
+                    evento => {
+                        if (
+                            evento.key === "Enter" ||
+                            evento.key === " "
+                        ) {
+                            evento.preventDefault();
+                            esconderTooltip();
+                            abrirConteudo(dataTexto);
+                        }
+                    }
+                );
+
+                elementoDia.appendChild(
+                    tituloAula
+                );
+
+            });
+
+            const possuiExperimento =
+                conteudoDoDia.itens?.some(item =>
+                    item.capitulo === "[EXP]" ||
+                    item.pagina === "[EXP]"
+                );
+
+            if (possuiExperimento) {
+
+                const experimento =
+                    document.createElement("div");
+
+                experimento.className =
+                    "experimento-aula";
+                experimento.tabIndex = 0;
+                experimento.setAttribute(
+                    "role",
+                    "button"
+                );
+                experimento.setAttribute(
+                    "aria-label",
+                    "Ver experimento"
+                );
+
+                const simbolo =
+                    document.createElement("span");
+
+                simbolo.textContent = "🧪";
+                simbolo.setAttribute(
+                    "aria-hidden",
+                    "true"
+                );
+
+                const textoExperimento =
+                    document.createElement("span");
+
+                textoExperimento.textContent =
+                    "Experimento";
+
+                experimento.append(
+                    simbolo,
+                    textoExperimento
+                );
+
+                const abrirExperimento = evento => {
+                    evento.stopPropagation();
+                    esconderTooltip();
+                    abrirConteudo(dataTexto);
+                };
+
+                experimento.addEventListener(
+                    "click",
+                    abrirExperimento
+                );
+
+                experimento.addEventListener(
+                    "keydown",
+                    evento => {
+                        if (
+                            evento.key === "Enter" ||
+                            evento.key === " "
+                        ) {
+                            evento.preventDefault();
+                            abrirExperimento(evento);
+                        }
+                    }
+                );
+
+                elementoDia.appendChild(
+                    experimento
+                );
+
+            }
+
+            elementoDia.addEventListener(
+                "mouseenter",
+                () => mostrarTooltip(
+                    elementoDia,
+                    conteudoDoDia
+                )
+            );
+
+            elementoDia.addEventListener(
+                "mouseleave",
+                esconderTooltip
             );
 
         }
@@ -935,26 +1351,7 @@ function criarCalendario(mes, nomeMes) {
    MONTAGEM DO CALENDÁRIO
    ========================================================= */
 
-async function montarCalendarios() {
-
-    try {
-
-        const resposta = await fetch(
-            "conteudos.json",
-            { cache: "no-store" }
-        );
-
-        if (!resposta.ok) {
-            throw new Error("Não foi possível carregar os conteúdos.");
-        }
-
-        conteudos = await resposta.json();
-
-    } catch (erro) {
-
-        console.warn(erro.message);
-
-    }
+function montarCalendarios() {
 
     const area =
         document.getElementById(
