@@ -64,6 +64,21 @@
             font-size: 13px;
         }
 
+        .administracao {
+            margin-left: auto;
+        }
+
+        .botao-admin {
+            display: inline-block;
+            padding: 9px 13px;
+            border-radius: 7px;
+            background: #1f4e79;
+            color: white;
+            font-size: 13px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
         .cor {
             width: 16px;
             height: 16px;
@@ -161,13 +176,29 @@
         }
 
         .domingo {
-            background: #fff5f5;
+            background: #f0f2f4;
         }
 
-        .domingo .numero {
-            color: #b62323;
+        .dia-clicavel {
+            cursor: pointer;
         }
 
+        .dia-clicavel:hover,
+        .dia-clicavel:focus-visible {
+            outline: 2px solid #1f4e79;
+            outline-offset: -2px;
+        }
+
+        .conteudo-aula {
+            margin-top: 5px;
+            padding: 4px 5px;
+            border-radius: 5px;
+            background: #d7e8f7;
+            color: #163a5b;
+            font-size: 10px;
+            line-height: 1.25;
+            font-weight: 600;
+        }
 
         /* DIAS ANTERIORES AO INÍCIO */
 
@@ -222,6 +253,60 @@
         }
 
 
+        /* JANELA DE CONTEÚDO */
+
+        .modal {
+            position: fixed;
+            inset: 0;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: rgba(20, 32, 43, 0.55);
+        }
+
+        .modal[hidden] {
+            display: none;
+        }
+
+        .modal-conteudo {
+            width: min(560px, 100%);
+            max-height: 85vh;
+            overflow: auto;
+            padding: 24px;
+            border-radius: 12px;
+            background: white;
+            box-shadow: 0 12px 35px rgba(0,0,0,0.25);
+        }
+
+        .modal-topo {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .modal h3 {
+            margin: 0 0 16px;
+            color: #1f4e79;
+        }
+
+        .modal-fechar {
+            border: 0;
+            background: transparent;
+            color: #555;
+            cursor: pointer;
+            font-size: 25px;
+            line-height: 1;
+        }
+
+        .modal-texto {
+            line-height: 1.55;
+            white-space: pre-wrap;
+        }
+
+
         footer {
             text-align: center;
             margin-top: 30px;
@@ -234,6 +319,11 @@
 
             .calendarios {
                 grid-template-columns: 1fr;
+            }
+
+            .administracao {
+                width: 100%;
+                margin-left: 0;
             }
 
         }
@@ -285,6 +375,16 @@
             Período anterior às aulas
         </div>
 
+        <div class="administracao">
+            <a
+                class="botao-admin"
+                href="https://github.com/ugangelo/MEE120-Diurno/edit/main/conteudos.json"
+                target="_blank"
+                rel="noopener noreferrer">
+                Cadastrar conteúdo
+            </a>
+        </div>
+
     </div>
 
 
@@ -298,6 +398,35 @@
         MEE120 - Diurno |
         2º semestre de 2026
     </footer>
+
+</div>
+
+
+<div
+    class="modal"
+    id="modal-conteudo"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="modal-titulo"
+    hidden>
+
+    <div class="modal-conteudo">
+        <div class="modal-topo">
+            <h3 id="modal-titulo"></h3>
+            <button
+                class="modal-fechar"
+                id="modal-fechar"
+                type="button"
+                aria-label="Fechar">
+                &times;
+            </button>
+        </div>
+
+        <div
+            class="modal-texto"
+            id="modal-texto">
+        </div>
+    </div>
 
 </div>
 
@@ -317,6 +446,8 @@ const meses = [
     { numero: 10, nome: "Novembro" },
     { numero: 11, nome: "Dezembro" }
 ];
+
+let conteudos = {};
 
 
 /* =========================================================
@@ -488,6 +619,49 @@ function eventosDoDia(data) {
 }
 
 
+function abrirConteudo(data) {
+
+    const modal =
+        document.getElementById("modal-conteudo");
+
+    const titulo =
+        document.getElementById("modal-titulo");
+
+    const texto =
+        document.getElementById("modal-texto");
+
+    const conteudo = conteudos[data];
+
+    const dataFormatada =
+        new Intl.DateTimeFormat(
+            "pt-BR",
+            {
+                timeZone: "UTC",
+                dateStyle: "long"
+            }
+        ).format(new Date(data + "T12:00:00Z"));
+
+    titulo.textContent =
+        conteudo?.titulo || "Conteúdo da aula";
+
+    texto.textContent = conteudo?.conteudo
+        ? dataFormatada + "\n\n" + conteudo.conteudo
+        : dataFormatada + "\n\nNenhum conteúdo cadastrado para este dia.";
+
+    modal.hidden = false;
+
+    document.getElementById("modal-fechar").focus();
+
+}
+
+
+function fecharConteudo() {
+
+    document.getElementById("modal-conteudo").hidden = true;
+
+}
+
+
 function criarCalendario(mes, nomeMes) {
 
     const calendario =
@@ -604,6 +778,8 @@ function criarCalendario(mes, nomeMes) {
 
         elementoDia.className = "dia";
 
+        elementoDia.dataset.data = dataTexto;
+
 
         /* 1 A 8 DE AGOSTO EM CINZA */
 
@@ -648,7 +824,9 @@ function criarCalendario(mes, nomeMes) {
         /* EVENTOS DO DIA */
 
         const eventosHoje =
-            eventosDoDia(dataTexto);
+            dataAtual.getDay() === 0
+                ? []
+                : eventosDoDia(dataTexto);
 
 
         eventosHoje.forEach(evento => {
@@ -680,6 +858,65 @@ function criarCalendario(mes, nomeMes) {
         });
 
 
+        /* CONTEÚDO DA AULA */
+
+        const conteudoDoDia =
+            dataAtual.getDay() !== 0 &&
+            !elementoDia.classList.contains("desativado")
+                ? conteudos[dataTexto]
+                : null;
+
+        if (conteudoDoDia) {
+
+            const blocoConteudo =
+                document.createElement("div");
+
+            blocoConteudo.className =
+                "conteudo-aula";
+
+            blocoConteudo.textContent =
+                conteudoDoDia.titulo || "Conteúdo da aula";
+
+            elementoDia.appendChild(
+                blocoConteudo
+            );
+
+        }
+
+
+        if (
+            dataAtual.getDay() !== 0 &&
+            !elementoDia.classList.contains("desativado")
+        ) {
+
+            elementoDia.classList.add("dia-clicavel");
+            elementoDia.tabIndex = 0;
+            elementoDia.setAttribute(
+                "aria-label",
+                "Ver conteúdo de " + dataTexto
+            );
+
+            elementoDia.addEventListener(
+                "click",
+                () => abrirConteudo(dataTexto)
+            );
+
+            elementoDia.addEventListener(
+                "keydown",
+                evento => {
+                    if (
+                        evento.key === "Enter" ||
+                        evento.key === " "
+                    ) {
+                        evento.preventDefault();
+                        abrirConteudo(dataTexto);
+                    }
+                }
+            );
+
+        }
+
+
         dias.appendChild(
             elementoDia
         );
@@ -698,22 +935,70 @@ function criarCalendario(mes, nomeMes) {
    MONTAGEM DO CALENDÁRIO
    ========================================================= */
 
-const area =
-    document.getElementById(
-        "calendarios"
-    );
+async function montarCalendarios() {
+
+    try {
+
+        const resposta = await fetch(
+            "conteudos.json",
+            { cache: "no-store" }
+        );
+
+        if (!resposta.ok) {
+            throw new Error("Não foi possível carregar os conteúdos.");
+        }
+
+        conteudos = await resposta.json();
+
+    } catch (erro) {
+
+        console.warn(erro.message);
+
+    }
+
+    const area =
+        document.getElementById(
+            "calendarios"
+        );
+
+    meses.forEach(mes => {
+
+        area.appendChild(
+            criarCalendario(
+                mes.numero,
+                mes.nome
+            )
+        );
+
+    });
+
+}
 
 
-meses.forEach(mes => {
+document.getElementById("modal-fechar").addEventListener(
+    "click",
+    fecharConteudo
+);
 
-    area.appendChild(
-        criarCalendario(
-            mes.numero,
-            mes.nome
-        )
-    );
+document.getElementById("modal-conteudo").addEventListener(
+    "click",
+    evento => {
+        if (evento.target.id === "modal-conteudo") {
+            fecharConteudo();
+        }
+    }
+);
 
-});
+document.addEventListener(
+    "keydown",
+    evento => {
+        if (evento.key === "Escape") {
+            fecharConteudo();
+        }
+    }
+);
+
+montarCalendarios();
 
 </script>
 
